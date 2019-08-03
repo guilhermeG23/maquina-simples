@@ -12,6 +12,7 @@ cache_teclado = []
 memoria = []
 cache_cpu = []
 registrador = []
+memoria_retorno = 0
 
 #Funcoes
 
@@ -28,6 +29,10 @@ def memoria_ram(cache_teclado):
         memoria.append(cache_teclado[i])
     cache_teclado.clear()
 
+#Escrevendo na RAM
+def memoria_ram_retorno(entrada):
+    return entrada
+
 #Cache
 def cache(memoria):
     for i in range(0, len(memoria)):
@@ -39,6 +44,7 @@ def registradores(cache):
         registrador.append(cache_cpu[i])
 
 #ULA
+#Unica funcao registrada na ULA e a de soma
 def ULA(registrador):
     operador = str(registrador[0]) + str(registrador[1])
     
@@ -83,12 +89,13 @@ def ULA(registrador):
     return valor
 
 #Sleep no sistema
+#Simulando o tempo que leva para processar uma instrução de um nivel para outro
 def dormir(tempo):
     sleep(tempo)
 
 #Pausar completo
 def pausar():
-    input("Aperte <enter> para continuar...")
+    input()
 
 #Mensagem de entrada
 def mensagem(frase):
@@ -100,30 +107,52 @@ def mensagem(frase):
 #Programa
 def funcao_principal():
     try:
-        mensagem("Simulando uma simples máquina de 4 bits multinível de 5 camadas!")
+        mensagem("Simulando uma simples máquina de 4 bits multinível de 6 camadas!")
         dormir(1)
         mensagem("Demonstrando o fluxo de uma execução de um programa!")
-        mensagem("Camada - 5")
+        mensagem("Camada - 6 -> Auto nível -> Nível de usuário")
         dormir(1)
         mensagem("Explicação simples do programa:\n1->Entre com 0/1\n2->Entre com o operador\n3->Ex: 0010-> 00 -> operador -> 1 -> primeiro valor -> 0 -> segundo valor!\n\nTipos de operação: \n00 -> Não fazer nada\n01 -> AND\n10 -> OR\n11 -> XOR")
         dormir(1)
         teclado()
         dormir(1)
         pausar()
-        mensagem("Camada - 4")
+        mensagem("Camada - 5 -> Baixo nível")
+        dormir(1)
         pausar()
-        mensagem("Camada - 3")
+        mensagem("Camada - 4 -> S.O")
+        dormir(1)
+        pausar()
+        mensagem("Camada - 3 -> Conjunto de instruções -> Fornecido pelo fabricante")
         memoria_ram(cache_teclado)
         dormir(1)
         pausar()
-        mensagem("Camada - 2")
+        mensagem("Camada - 2 -> Firmware -> Microprogramas e microinstuções")
+        dormir(1)
         pausar()
-        mensagem("Camada - 1")
+        mensagem("Camada - 1 -> Hardware -> Microarquitetura")
+        dormir(1)
         pausar()
         cache(memoria)
         registradores(cache)
         processo = ULA(registrador)
-        mensagem("O valor processado tem a saida de {}".format(processo))
+        pausar()
+        dormir(1)
+        mensagem("Camada - 2 -> Firmware -> Microprogramas e microinstuções")
+        pausar()
+        dormir(1)
+        mensagem("Camada - 3 -> Conjunto de instruções -> Fornecido pelo fabricante")
+        memoria_retorno = processo
+        pausar()
+        dormir(1)
+        mensagem("Camada - 4 -> S.O")
+        pausar()
+        dormir(1)
+        mensagem("Camada - 5 -> Baixo nível")
+        pausar()
+        dormir(1)
+        mensagem("Camada - 6 -> Auto nível -> Nível de usuário")
+        mensagem("O valor processado tem a saída de {}".format(memoria_retorno))
     except KeyboardInterrupt:
         mensagem("Finalizando máquina")
         exit()
